@@ -10,7 +10,6 @@ def make_generic_ant(Q, distance_matrix, alpha, beta):
 	H = numpy.matrix(map_matrix(lambda x: (Q / x) ** beta if x != 0 else 0, distance_matrix))
 	num_nodes = len(distance_matrix)
 	distance_matrix = numpy.matrix(distance_matrix, dtype=numpy.float)
-	print(H)
 	# Returns a 4 value tuple: matrix pheromone', Q, cost_of_tour, visited_edges:
 	# pheromone'[i][j] = Q / cost_of_tour if i->j edge was visited otherwise 0
 	def ant(starting_node, pheromone_matrix):
@@ -50,43 +49,52 @@ def make_generic_ant(Q, distance_matrix, alpha, beta):
 		return (pheromone_matrix_2, Q, cost_of_tour, visited_edges)
 	return ant
 
-ant_constructor = make_generic_ant(10, [[0.0, 32.0, 21.0], [321.0, 0.0, 121.0], [32.0, 1.0, 0.0]], 0.23, 0.43)
-ant1 = ant_constructor(0, [[0,2,2],[1,0,1],[3,1,0]])
-ant2 = ant_constructor(1, [[0,2,2],[1,0,1],[3,1,0]])
-ant3 = ant_constructor(2, [[0,2,2],[1,0,1],[3,1,0]])
+# ant_constructor = make_generic_ant(10, [[0.0, 32.0, 21.0], [321.0, 0.0, 121.0], [32.0, 1.0, 0.0]], 0.23, 0.43)
+# ant1 = ant_constructor(0, [[0,2,2],[1,0,1],[3,1,0]])
+# ant2 = ant_constructor(1, [[0,2,2],[1,0,1],[3,1,0]])
+# ant3 = ant_constructor(2, [[0,2,2],[1,0,1],[3,1,0]])
 
-print(ant1)
-print(ant2)
-print(ant3)
+# print(ant1)
+# print(ant2)
+# print(ant3)
 
 
-# 2) Update pheromone matrix
 from multiprocessing import Pool
 
-
 # Returns (updated pheromone_matrix, (best_total_cost, best_tour))
-def one_simulation_step(num_of_ants, pheromone_matrix, Q, distance_matrix, alpha, beta):
-	ant_contructor = make_generic_ant(Q, distance_matrix, alpha, beta)
-	num_nodes = len(distance_matrix)
-	starting_nodes = [random.randint(num_nodes) for _ in num_of_ants]
+def one_simulation_step(ant_constructor, num_of_ants, pheromone_matrix):
+	num_nodes = len(pheromone_matrix)
+	starting_nodes = [random.randint(0, num_nodes-1) for _ in range(num_of_ants)]
 
-	worker_pool = Pool(num_of_ants)
+	#worker_pool = Pool(num_of_ants)
 
-	data = worker_pool.map(lambda starting_node: ant_constructor(starting_node, pheromone_matrix))
+	data = list(map(lambda starting_node: ant_constructor(starting_node, pheromone_matrix), starting_nodes))
 
 	pheromone_matrices = map(lambda x: x[0], data)
+	pheromone_matrix = sum(pheromone_matrices)
 	total_costs_and_edges = map(lambda x: (x[2], x[3]), data)
+	cost, edges = min(total_costs_and_edges, key=lambda x: x[0])
+	
+	return pheromone_matrix, cost, edges
 
-	pheromone_matrix = numpy.matrix.sum(pheromone_matrices)
-
-	return pheromone_matrix, min(total_costs_and_edges, lambda x: x[0])
-# 3) Evaporate pheromone a bit
-
-
-
-def evaporate_pheromone(pheromone_matrix, evaporate_factor):
+def evaporate_pheromone(pheromone_matrix, evaporation_factor):
 
 	evaporate = numpy.vectorize(lambda pheromone_ij: pheromone_ij * (1 - evaporation_factor))
 	return evaporate(pheromone_matrix)
 
 
+def simulation(num_iterations, num_of_ants, Q, distance_matrix, alpha, beta, evaporation_factor):
+	results = []
+	ant_contructor = make_generic_ant(Q, distance_matrix, alpha, beta)
+	num_nodes = len(distance_matrix)
+	pheromone_matrix = [[random.random() for j in range(num_nodes)] for i in range(num_nodes)]
+	
+	for _ in range(num_iterations):
+		pheromone_matrix, best_total_cost, best_tour = one_simulation_step(ant_contructor, num_of_ants, pheromone_matrix)
+		results.append( (best_total_cost, best_tour) )
+		evaporate_pheromone(pheromone_matrix, evaporation_factor)
+	return results
+
+# simulation1 = simulation(10, 4, 10, [[0, 12, 32], [28, 0, 32], [1, 1, 0]], 0.1, 0.05, 0.4)
+
+# print(simulation1)
