@@ -59,7 +59,7 @@ def make_generic_ant(Q, distance_matrix, alpha, beta):
 # print(ant3)
 
 
-from multiprocessing import Pool
+# from multiprocessing import Pool
 
 # Returns (updated pheromone_matrix, (best_total_cost, best_tour))
 def one_simulation_step(ant_constructor, num_of_ants, pheromone_matrix):
@@ -95,6 +95,3 @@ def simulation(num_iterations, num_of_ants, Q, distance_matrix, alpha, beta, eva
 		evaporate_pheromone(pheromone_matrix, evaporation_factor)
 	return results
 
-# simulation1 = simulation(10, 4, 10, [[0, 12, 32], [28, 0, 32], [1, 1, 0]], 0.1, 0.05, 0.4)
-
-# print(simulation1)
