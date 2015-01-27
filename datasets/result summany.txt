@@ -1,0 +1,10 @@
+						dantzig42		   gr17														 fri26	 
+
+Optimal 				699				   2085														937
+
+Best found 			 	699, ~5m85s		   2085, 55s 												937, 1m36s 																												
+
+Our Best 				4963,  8m58s       5258, 37s (alpha = 0.7, iter = 7, ants = 7, evap = 0.3)	2755 (alpha 0.7, beta = 0.7, iter = 7, ants = 2, ), 1.76s
+
+
+
