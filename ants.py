@@ -26,7 +26,7 @@ def make_generic_ant(Q, distance_matrix, alpha, beta):
 		while not all(visited_nodes):
 			for next_node in filter(lambda node: node != current_node, range(num_nodes)):
 				node_probability = pheromone_matrix[current_node, next_node] * H[current_node, next_node]
-				node_probability = node_probability / (pheromone_sum_of_visited + node_probability)
+				node_probability = node_probability / (pheromone_sum_of_visited + node_probability + 0.000001)
 				node_acceptance_treshold = random_generator.random()
 
 				if node_probability >= node_acceptance_treshold:
@@ -87,7 +87,7 @@ def simulation(num_iterations, num_of_ants, Q, distance_matrix, alpha, beta, eva
 	results = []
 	ant_contructor = make_generic_ant(Q, distance_matrix, alpha, beta)
 	num_nodes = len(distance_matrix)
-	pheromone_matrix = [[random.random() for j in range(num_nodes)] for i in range(num_nodes)]
+	pheromone_matrix = [[random.uniform(0.1, 1.0) for j in range(num_nodes)] for i in range(num_nodes)]
 	
 	for _ in range(num_iterations):
 		pheromone_matrix, best_total_cost, best_tour = one_simulation_step(ant_contructor, num_of_ants, pheromone_matrix)
