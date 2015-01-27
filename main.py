@@ -8,15 +8,18 @@ def print_header(dataset_path):
 	print("                     Results %s                               " % (dataset_path,))
 	print("------------------------------------------------------------")
 
-def print_results(Q, beta, alpha, num_iterations, num_ants, evaporation_factor, best_path, best_path_cost):	
+def print_results(Q, beta, alpha, num_iterations, num_ants, evaporation_factor, best_path, best_path_cost, execution_time):	
 	print("\nFor Q = %s, alpha = %s, beta = %s , num_iterations = %s, num_ants = %s, evaporation_factor = %s:" % (Q, beta, alpha, num_iterations, num_ants, evaporation_factor))
 	print("Best found path is:")
 	print(" ".join(map(lambda x: str(x[0]), best_path)))
 	print("\nBest found path cost = %s\n" % (best_path_cost,))
+	print("Execution time: %s seconds" % (execution_time,))
 
 # 
 def get_distance_matrix(dataset):
 	return list(map(lambda x: list(map(lambda y: int(y), x.split())), dataset))
+
+from time import time
 
 if __name__ == "__main__":   
 
@@ -29,12 +32,15 @@ if __name__ == "__main__":
 
 	print_header(data_path)
 	for Q in [5]:
-		for beta in [0.7]:
-			for alpha in [0.7]:
-				for num_iterations in [5, 7]:
-					for num_ants in [2, 5]:
-						for evaporation_factor in [0.3]:
+		for beta in [0.2, 0.7]:
+			for alpha in [0.3, 0.7]:
+				for num_iterations in [3, 5, 7]:
+					for num_ants in [2, 5, 7]:
+						for evaporation_factor in [0.3, 0.7]:
+								start = time()
 								result = simulation(num_iterations, num_ants, Q, distance_matrix, alpha, beta, evaporation_factor)
+								end = time()
+								print(end - start)
 								best_path_cost, best_path = min(result, key=lambda x: x[0])
-								print_results(Q, beta, alpha, num_iterations, num_ants, evaporation_factor, best_path, best_path_cost)
+								print_results(Q, beta, alpha, num_iterations, num_ants, evaporation_factor, best_path, best_path_cost, end - start)
 	#Q, beta, alpha, num_iterations, num_ants, evaporation_factor = 100, 0.1, 0.2, 2, 3, 0.01
