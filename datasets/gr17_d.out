@@ -1,0 +1,40 @@
+
+------------------------------------------------------------
+                     Results datasets/gr17_d.txt                               
+------------------------------------------------------------
+1.784101963043213
+
+For Q = 5, alpha = 0.7, beta = 0.7 , num_iterations = 3, num_ants = 2, evaporation_factor = 0.3:
+Best found path is:
+6 0 5 13 10 4 0 12 3 12 1 15 5 16 8 10 7 6 8 11 10 4 9 1 9 14 0 12 6 0 12 6 7 6 3 4 14 15 2
+
+Best found path cost = 7981.0
+
+Execution time: 1.784101963043213 seconds
+16.686954021453857
+
+For Q = 5, alpha = 0.7, beta = 0.7 , num_iterations = 3, num_ants = 5, evaporation_factor = 0.3:
+Best found path is:
+0 1 2 9 10 2 11 3 12 4 13 8 15 13 7 8 16 13 14 6 2 15 12 6 7 6 2 10 4 2 3 5
+
+Best found path cost = 6845.0
+
+Execution time: 16.686954021453857 seconds
+29.97371506690979
+
+For Q = 5, alpha = 0.7, beta = 0.7 , num_iterations = 5, num_ants = 2, evaporation_factor = 0.3:
+Best found path is:
+16 0 10 2 10 14 10 2 0 11 16 14 2 13 2 7 2 14 15 7 12 8 16 14 2 14 2 13 2 14 2 7 12 4 2 5 6 16 4 2 10 9 2 14 10 2 0 6 3 12 4 2 13 2 5 6 16 7 6 5 7 12 2 7 2 0 6 3 12 7 2 5 7 5 2 16 7 2 0 11 6 16 0 16 9 1
+
+Best found path cost = 12478.0
+
+Execution time: 29.97371506690979 seconds
+47.230700969696045
+
+For Q = 5, alpha = 0.7, beta = 0.7 , num_iterations = 5, num_ants = 5, evaporation_factor = 0.3:
+Best found path is:
+5 0 6 16 9 10 13 11 15 11 15 0 13 2 5 0 1 2 4 2 10 12 3 0 3 12 3 12 16 6 7 6 16 12 16 5 7 6 12 3 12 5 7 3 8 2 12 16 6 16 13 2 12 6 7 6 16 5 12 9 10 4 14
+
+Best found path cost = 7832.0
+
+Execution time: 47.230700969696045 seconds
